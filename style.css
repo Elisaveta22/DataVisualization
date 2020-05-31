@@ -76,3 +76,8 @@ body {
     float: none;
   }
 }
+
+#map-wrapper {
+  display: flex;
+  justify-content: center;
+}
