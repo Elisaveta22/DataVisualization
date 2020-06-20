@@ -60,7 +60,12 @@
         scrollLeft =
           document.documentElement.scrollLeft || document.body.scrollLeft;
 
-      nodel.html(content).style("opacity", 1).style("pointer-events", "all");
+      nodel
+        .html(content)
+        .style("opacity", 1)
+        .style("pointer-events", "all")
+        .style("background-color", "gray")
+        .style("color", "white");
 
       while (i--) nodel.classed(directions[i], false);
       coords = directionCallbacks.get(dir).apply(this);

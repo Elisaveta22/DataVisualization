@@ -4,7 +4,7 @@ var format = d3.format(",");
 var tip = d3
   .tip()
   .attr("class", "d3-tip")
-  .offset([-10, 0])
+  .offset([120, 0])
   .html(function (d) {
     return (
       "<strong>Country: </strong><span class='details'>" +
@@ -12,6 +12,10 @@ var tip = d3
       "<br></span>" +
       "<strong>Population: </strong><span class='details'>" +
       format(d.population) +
+      "</span>" +
+      "<br></span>" +
+      "<strong>Salary: </strong><span class='details'>" +
+      format(d.amount) +
       "</span>"
     );
   });
@@ -21,6 +25,33 @@ var margin = { top: 0, right: 50, bottom: 0, left: 0 },
   height = 500 - margin.top - margin.bottom;
 
 var color = d3.scaleThreshold();
+
+var color = d3
+  .scaleThreshold()
+  .domain([
+    10000,
+    100000,
+    500000,
+    1000000,
+    5000000,
+    10000000,
+    50000000,
+    100000000,
+    500000000,
+    1500000000,
+  ])
+  .range([
+    "rgb(232,232,232)",
+    "rgb(220,220,220)",
+    "rgb(208,208,208)",
+    "rgb(190,190,190)",
+    "rgb(160,160,160)",
+    "rgb(128,128,128)",
+    "rgb(96,96,96)",
+    "rgb(64,64,64)",
+    "rgb(32,32,32)",
+    "rgb(0,0,0)",
+  ]);
 
 var path = d3.geoPath();
 
@@ -44,16 +75,25 @@ svg.call(tip);
 queue()
   .defer(d3.json, "world_countries.json")
   .defer(d3.tsv, "world_population.tsv")
+  .defer(d3.tsv, "monthly_salary.tsv")
   .await(ready);
 
-function ready(error, data, population) {
+function ready(error, data, population, salary) {
   var populationById = {};
+  var salaryById = {};
 
   population.forEach(function (d) {
     populationById[d.id] = +d.population;
   });
   data.features.forEach(function (d) {
     d.population = populationById[d.id];
+  });
+
+  salary.forEach(function (d) {
+    salaryById[d.name] = +d.amount;
+  });
+  data.features.forEach(function (d) {
+    d.amount = salaryById[d.name];
   });
 
   svg
