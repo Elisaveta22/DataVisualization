@@ -68,12 +68,12 @@ function ready(error, data, population, salary) {
 
   // gets an array of all country names with undefined amount (salary)
   // remove this later
-  const countriesWithUndefinedSalary = data.features
+  /* const countriesWithUndefinedSalary = data.features
     .filter((f) => f.amount == null)
     .map((f) => f.properties.name);
 
   console.log(countriesWithUndefinedSalary);
-
+*/
   showOrHideAboutPage(false);
   showOrHideMap(true);
   setDataAndDrawMap();
@@ -193,8 +193,8 @@ function setDataAndDrawMap() {
     .attr("d", path)
     .style("fill", colorFunction)
     .style("stroke", "rgb(163, 230, 204)")
-    .style("stroke-width", 1.5)
-    .style("opacity", 0.7)
+    .style("stroke-width", 1.9)
+    .style("opacity", 0.8)
     // tooltips
     .style("stroke", "rgb(163, 230, 204)")
     .style("stroke-width", 0.3)
@@ -210,7 +210,7 @@ function setDataAndDrawMap() {
       tip.hide(d);
 
       d3.select(this)
-        .style("opacity", 0.7)
+        .style("opacity", 0.8)
         .style("stroke", "rgb(163, 230, 204)")
         .style("stroke-width", 0.3);
     });
